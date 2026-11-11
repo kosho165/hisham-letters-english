@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisham Letters - Portal</title>
+    <style>
+        html { 
+            background-image: url('images/family.png'); 
+            background-size: contain; 
+            background-attachment: fixed; 
+            background-position: left bottom; 
+            background-repeat: no-repeat;
+            background-color: #f0f2f5;
+            height: 100%; 
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        .main-container { width: 100%; max-width: 450px; background-color: rgba(255, 255, 255, 0.96); border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); padding: 25px; text-align: center; border: 4px solid #4a148c; }
+
+        .academy-promo { background: linear-gradient(45deg, #ffd700, #ff8c00); color: #4a148c; text-decoration: none; padding: 12px; border-radius: 15px; display: block; font-weight: bold; margin-bottom: 20px; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .app-title { color: #4a148c; font-size: 28px; margin: 0; font-weight: 800; }
+        .app-subtitle { color: #666; font-size: 15px; margin-bottom: 5px; font-weight: bold; }
+        .app-subtitle-en { color: #9c27b0; font-size: 14px; margin-bottom: 25px; font-weight: bold; direction: ltr; }
+
+        .auth-toggle-group { display: flex; gap: 10px; margin-bottom: 20px; border-radius: 12px; background: #eee; padding: 5px; }
+        .toggle-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: #4a148c; background: none; }
+        .toggle-btn.active { background: white; color: #4a148c; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .input-group { text-align: right; margin-bottom: 15px; }
+        .input-group label { display: block; color: #4a148c; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #ce93d8; box-sizing: border-box; outline: none; font-size: 16px; }
+        
+        .primary-btn { width: 100%; padding: 15px; background: #4a148c; color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; margin-top: 10px; transition: 0.3s; }
+        .primary-btn:hover { background: #6a1b9a; transform: scale(1.02); }
+
+        #letters-screen { display: none; }
+        #welcome-user { color: #2e7d32; font-weight: bold; font-size: 22px; line-height: 1.5; margin-bottom: 10px; }
+        .status-badge { display: inline-block; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 20px; background: #ffd700; color: #4a148c; border: 1px solid #ff8c00; }
+
+        .letters-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .letter-card { 
+            background: white; border: 2px solid #ce93d8; border-radius: 20px; padding: 12px; 
+            text-decoration: none; color: #4a148c; display: flex; align-items: center; justify-content: space-around;
+            transition: 0.3s; position: relative;
+        }
+        .letter-card:hover { transform: scale(1.05); box-shadow: 0 4px 10px rgba(206, 147, 216, 0.4); }
+        .letter-card img { width: 60px; height: 60px; object-fit: contain; }
+        .letter-card span.char { font-size: 36px; font-weight: 900; }
+
+        .champions-btn { background: #fce4ec; color: #ad1457; text-decoration: none; padding: 15px; border-radius: 15px; display: block; font-weight: bold; font-size: 16px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .champions-btn span { font-size: 13px; font-weight: normal; display: block; direction: ltr; }
+        
+        .footer-credit { margin-top: 25px; font-size: 16px; font-weight: 900; color: #4a148c; letter-spacing: 1px; direction: ltr;}
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <a href="#" class="academy-promo">لمزيد من الكورسات المتقدمة، حمل تطبيق<br><strong>Hisham Academy English</strong></a>
+        
+        <h1 class="app-title">Hisham Letters 🔠</h1>
+        <p class="app-subtitle">مرحباً بك في عالم الحروف الممتع</p>
+        <p class="app-subtitle-en">Welcome to the fun world of letters</p>
+
+        <div id="auth-screen">
+            <div class="auth-toggle-group">
+                <button class="toggle-btn active" id="toggle-to-login">تسجيل دخول</button>
+                <button class="toggle-btn" id="toggle-to-register">إنشاء حساب جديد</button>
+            </div>
+            
+            <div id="login-form-fields" class="login-only">
+                <div class="input-group"><label>البريد الإلكتروني (Email)</label><input type="email" id="user-email-login" placeholder="example@mail.com"></div>
+                <div class="input-group"><label>كلمة المرور (Password)</label><input type="password" id="user-pass-login" placeholder="******"></div>
+                <button class="primary-btn" id="btn-login-final">دخول لعالم الحروف 🚀</button>
+            </div>
+
+            <div id="register-form-fields" class="register-only" style="display: none;">
+                <div class="input-group"><label>اسم الطالب (Student Name)</label><input type="text" id="user-name-register" placeholder="أدخل اسم الطالب بالعربي"></div>
+                <div class="input-group"><label>البريد الإلكتروني (Email)</label><input type="email" id="user-email-register" placeholder="example@mail.com"></div>
+                <div class="input-group"><label>كلمة المرور (Password)</label><input type="password" id="user-pass-register" placeholder="******"></div>
+                <button class="primary-btn" style="background: #2e7d32;" id="btn-register-final">إنشاء حساب ودخول ✅</button>
+            </div>
+        </div>
+
+        <div id="letters-screen">
+            <div id="welcome-user"></div>
+            <div id="user-status" class="status-badge">🌟 النسخة الكاملة المجانية</div>
+            <div class="letters-grid" id="lettersGrid"></div>
+            
+            <a href="challenge.html" class="champions-btn">
+                🏆 تحدي الأبطال (نطق وكتابة) 🏆
+                <span>CHAMPIONS CHALLENGE (Speaking & Writing)</span>
+            </a>
+
+            <button onclick="logout()" style="background: none; border: none; color: #e53935; text-decoration: underline; cursor: pointer; font-size: 15px; font-weight: bold;">تسجيل خروج 🚪 Logout</button>
+        </div>
+
+        <div class="footer-credit">Created by: Hisham Embaby</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBNF8mnf0ucVbAbuZojokGSKNnUvQNvoGk",
+          authDomain: "hisham-s-english-academy.firebaseapp.com",
+          projectId: "hisham-s-english-academy",
+          storageBucket: "hisham-s-english-academy.firebasestorage.app",
+          messagingSenderId: "766824698161",
+          appId: "1:766824698161:web:aeb8d7ab371912e7aee010"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        const letterExamples = {
+            'A': 'a-1-apple', 'B': 'b-1-banana', 'C': 'c-1-cow', 'D': 'd-1-dog', 
+            'E': 'e-1-egg', 'F': 'f-1-fish', 'G': 'g-1-girl', 'H': 'h-1-hand', 
+            'I': 'i-1-ice', 'J': 'j-1-jam', 'K': 'k-1-key', 'L': 'l-1-lion',
+            'M': 'm-1-moon', 'N': 'n-1-nose', 'O': 'o-1-orange', 'P': 'p-1-panda', 
+            'Q': 'q-1-queen', 'R': 'r-1-robot', 'S': 's-1-sun', 'T': 't-1-tree', 
+            'U': 'u-1-umbrella', 'V': 'v-1-van', 'W': 'w-1-wolf', 'X': 'x-1-xray',
+            'Y': 'y-1-yoyo', 'Z': 'z-1-zoo'
+        };
+
+        document.getElementById('toggle-to-login').addEventListener('click', () => { showLoginForm(); });
+        document.getElementById('toggle-to-register').addEventListener('click', () => { showRegisterForm(); });
+
+        function showLoginForm() {
+            document.getElementById('toggle-to-login').classList.add('active');
+            document.getElementById('toggle-to-register').classList.remove('active');
+            document.getElementById('login-form-fields').style.display = 'block';
+            document.getElementById('register-form-fields').style.display = 'none';
+        }
+        function showRegisterForm() {
+            document.getElementById('toggle-to-login').classList.remove('active');
+            document.getElementById('toggle-to-register').classList.add('active');
+            document.getElementById('login-form-fields').style.display = 'none';
+            document.getElementById('register-form-fields').style.display = 'block';
+        }
+
+        document.getElementById('btn-login-final').addEventListener('click', async () => {
+            const email = document.getElementById('user-email-login').value.trim();
+            const pass = document.getElementById('user-pass-login').value.trim();
+            if(!email || !pass) return alert("من فضلك أدخل الإيميل والباسورد!");
+            try { await signInWithEmailAndPassword(auth, email, pass); } catch (e) { alert("خطأ في تسجيل الدخول: " + e.message); }
+        });
+
+        document.getElementById('btn-register-final').addEventListener('click', async () => {
+            const name = document.getElementById('user-name-register').value.trim();
+            const email = document.getElementById('user-email-register').value.trim();
+            const pass = document.getElementById('user-pass-register').value.trim();
+            if(!name || !email || !pass) return alert("من فضلك أدخل جميع البيانات!");
+            try {
+                const res = await createUserWithEmailAndPassword(auth, email, pass);
+                await updateProfile(res.user, { displayName: name });
+                
+                await setDoc(doc(db, "students", res.user.uid), { 
+                    fullName: name, 
+                    email: email, 
+                    accountStatus: "free_student",
+                    appName: "Hisham Letters" 
+                });
+                
+                alert("تم إنشاء حسابك بنجاح! نورت عالم الحروف.");
+            } catch (e) { alert("خطأ في إنشاء الحساب: " + e.message); }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                const studentDoc = await getDoc(doc(db, "students", user.uid));
+                let actualName = "";
+                
+                if (studentDoc.exists()) {
+                    actualName = studentDoc.data().fullName;
+                }
+                
+                if (!actualName) actualName = user.displayName || ""; 
+                
+                showLettersScreen(actualName); 
+            } else { showAuthScreen(); }
+        });
+
+        window.logout = () => signOut(auth);
+
+        function showAuthScreen() {
+            document.getElementById('auth-screen').style.display = 'block';
+            document.getElementById('letters-screen').style.display = 'none';
+            showLoginForm();
+        }
+
+        function showLettersScreen(name) {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('letters-screen').style.display = 'block';
+            document.getElementById('welcome-user').innerHTML = `Welcome, ${name}! 👋<br>مرحباً يا ${name}!`;
+            
+            createGrid();
+        }
+
+        function createGrid() {
+            const grid = document.getElementById('lettersGrid');
+            grid.innerHTML = "";
+            Object.keys(letterExamples).forEach((l, i) => {
+                const a = document.createElement('a');
+                a.href = `letter-${l.toLowerCase()}.html`;
+                a.className = "letter-card";
+                const imgName = letterExamples[l];
+                a.innerHTML = `<img src="images/${imgName}.jpg" onerror="this.src='images/${imgName}.png'; this.onerror=function(){this.src='assets/logo.png'}"><span class="char">${l}</span>`;
+                grid.appendChild(a);
+            });
+        }
+    </script>
+</body>
+</html>

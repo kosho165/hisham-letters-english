@@ -1,0 +1,266 @@
+body {
+    background-color: #e9e4f0; 
+    background-image: url('images/family.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 35%;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+}
+
+.app-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 480px; 
+    min-height: 90vh;
+    border-radius: 40px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 30px;
+    margin: 20px;
+}
+
+.home-header {
+    background: linear-gradient(135deg, #a770ef, #cf8bf3);
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: white;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.home-header img { width: 80px; border-radius: 50%; background: white; padding: 5px; }
+.home-header h1 { font-size: 22px; margin: 15px 0 5px; }
+.home-header p { font-size: 16px; margin: 0; }
+
+.letters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px 25px;
+}
+
+.letter-card {
+    background: white;
+    border: 2px solid #cf8bf3;
+    border-radius: 20px;
+    padding: 20px 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #4a148c;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.letter-card:hover { transform: translateY(-5px); }
+.letter-card h2 { font-size: 40px; margin: 0; }
+.letter-card img { width: 50px; height: 50px; object-fit: contain; }
+
+/* زرار التحدي في الرئيسية */
+.challenge-btn {
+    display: block;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    color: #4a148c;
+    text-decoration: none;
+    text-align: center;
+    margin: 10px 25px 20px;
+    padding: 15px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid #ff9a9e;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.challenge-btn:hover { transform: scale(1.02); }
+
+.page-header {
+    padding: 25px 20px 10px;
+    text-align: center;
+    position: relative;
+}
+
+.page-header h2 { color: #4a148c; margin: 0; font-size: 24px;}
+.page-header p { color: #888; margin: 5px 0 20px; }
+
+.back-btn {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    background: #cf8bf3;
+    color: white;
+    text-decoration: none;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.letter-video {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    border: 3px solid #cf8bf3;
+    display: block;
+    margin: 0 auto 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.flashcards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.card-wrapper { width: 100%; max-width: 300px; text-align: center; }
+
+.card-label {
+    background: #cf8bf3;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 15px 15px 0 0;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: -2px; 
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: 100%;
+    height: 250px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 0 0 20px 20px; 
+    border: 2px solid #cf8bf3;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.card-back { transform: rotateY(180deg); background: #fafafa; }
+.card img { max-width: 80%; max-height: 50%; object-fit: contain; }
+
+.quiz-section {
+    margin: 40px 20px 20px;
+    padding: 20px;
+    background: #f8f4fc;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.quiz-btn, .mic-btn {
+    background: #4a148c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+}
+.mic-btn { background: #e91e63; font-size: 18px; }
+
+.options { display: flex; justify-content: space-around; gap: 10px; }
+.option-btn {
+    background: white;
+    border: 2px solid #cf8bf3;
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+    width: 30%;
+}
+.option-btn img { width: 100%; height: auto; object-fit: contain; }
+
+.next-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* تنسيقات الكتابة والسكور */
+.score-board {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4a148c;
+    margin-bottom: 15px;
+    background: #f3e5f5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.write-input {
+    width: 80%;
+    padding: 15px;
+    font-size: 20px;
+    border: 2px solid #cf8bf3;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.hint-btn {
+    background: #ffc107;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px;
+}
+.check-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px;
+}

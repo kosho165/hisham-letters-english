@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Letter E - حرف الـ E</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* التنسيقات الأساسية */
+        .bilingual-label { display: block; font-size: 14px; opacity: 0.8; margin-top: 5px; font-weight: normal; }
+        .section-title { text-align: center; color: #4a148c; font-size: 28px; font-weight: bold; margin: 25px 0 15px; border-bottom: 2px dashed #ce93d8; padding-bottom: 10px; }
+
+        /* حركة انتقال الشاشات */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* قسم الفيديو */
+        .video-container { text-align: center; margin-bottom: 20px; background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .video-player { width: 100%; height: 300px; max-width: 500px; border-radius: 10px; outline: none; border: 3px solid #4a148c; display: block; margin: 0 auto; }
+
+        /* زراير الانتقال بين الشاشات */
+        .next-screen-btn { background: #4a148c; color: white; width: 100%; padding: 15px; border-radius: 15px; font-size: 22px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 20px; transition: 0.3s; }
+        .next-screen-btn:hover { background: #6a1b9a; transform: scale(1.02); }
+
+        /* ستايل الكروت المقلوبة (Flip Cards) */
+        .flashcards-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        .flip-card { background-color: transparent; width: 160px; height: 240px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 2px solid #ce93d8; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: white; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .flip-card-back { transform: rotateY(180deg); background-color: #f3e5f5; border-color: #4a148c; }
+        
+        .flashcard-img { width: 100%; height: 90px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; }
+        .flashcard-btn { background: #ff9800; color: white; border: none; padding: 8px 15px; border-radius: 20px; margin-top: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        .flashcard-btn:hover { background: #e68a00; }
+        .hint-text { font-size: 11px; color: #888; margin-top: 8px; }
+
+        /* قسم الاختبار */
+        .quiz-btn { background: #4a148c; color: white; padding: 15px 40px; border-radius: 30px; font-size: 24px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: 0.3s; margin-bottom: 20px; }
+        .quiz-btn:hover { background: #6a1b9a; }
+        .options-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .option-card { border: 2px solid #ce93d8; border-radius: 15px; padding: 10px; background: white; text-align: center; cursor: pointer; transition: 0.3s; width: 140px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .option-card:hover { border-color: #4a148c; transform: scale(1.05); }
+        .option-card img { width: 100%; height: 110px; object-fit: contain; border-radius: 10px; }
+        .option-title { margin: 10px 0 5px; font-size: 18px; font-weight: bold; color: #000; }
+        .option-subtitle { font-size: 14px; color: #000; font-weight: bold; margin: 0; }
+        .position-label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #000; }
+        
+        #feedback { font-size: 20px; font-weight: bold; margin-top: 20px; text-align: center; min-height: 50px; }
+        
+        /* زراير التحكم في اللعبة */
+        .game-control-btn { display: inline-block; background: #008CBA; color: white; padding: 15px 30px; border-radius: 30px; font-size: 22px; font-weight: bold; border: none; cursor: pointer; text-decoration: none; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: 0.3s; }
+        .game-control-btn:hover { background: #007399; transform: scale(1.05); }
+        .finish-btn { background: #4caf50; }
+        .finish-btn:hover { background: #388e3c; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="page-header">
+            <a href="index.html" class="back-btn">&lt;</a>
+            <h2>Learn Letter E</h2>
+        </header>
+
+        <div id="screen-1-video" class="fade-in">
+            <h2 class="section-title">
+                فيديو الحرف
+                <span class="bilingual-label">Letter Video</span>
+            </h2>
+            <div class="video-container">
+                <!-- تم استبدال الـ video بـ iframe لدعم جوجل درايف -->
+                <iframe id="main-video" class="video-player" src="https://drive.google.com/file/d/1XLx2JHijoS782xTH0-luS7oefTX_iDST/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+            
+            <button class="next-screen-btn" onclick="goToScreen2()">
+                الذهاب للكلمات (الفلاش كاردز) ➡️
+                <span class="bilingual-label">Go to Flashcards</span>
+            </button>
+        </div>
+
+        <div id="screen-2-flashcards" class="fade-in" style="display: none;">
+            <h2 class="section-title">
+                الكلمات والأمثلة 
+                <span class="bilingual-label">Vocabulary & Examples</span>
+            </h2>
+            <div class="flashcards-container">
+                
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/e-1-egg.jpg" alt="Egg" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0;">Egg</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold;">بيضة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-egg')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin-bottom: 10px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 16px; margin: 5px 0;">I see an <span style="color: #ff9800;">egg</span>.</p>
+                            <p style="margin: 5px 0 15px; color: #555;">أنا أرى بيضة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-egg')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط للرجوع 🔄</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/e-2-pen.jpg" alt="Pen" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0;">Pen</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold;">قلم</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-pen')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin-bottom: 10px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 16px; margin: 5px 0;">This is a <span style="color: #ff9800;">pen</span>.</p>
+                            <p style="margin: 5px 0 15px; color: #555;">هذا قلم</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-pen')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط للرجوع 🔄</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/e-3-bee.jpg" alt="Bee" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0;">Bee</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold;">نحلة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-bee')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin-bottom: 10px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 16px; margin: 5px 0;">It is a <span style="color: #ff9800;">bee</span>.</p>
+                            <p style="margin: 5px 0 15px; color: #555;">إنها نحلة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-bee')">🔊 اسمع</button>
+                            <p class="hint-text">اضغط للرجوع 🔄</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="next-screen-btn" style="background: #ff9800;" onclick="goToScreen3()">
+                الذهاب للعبة ➡️
+                <span class="bilingual-label">Go to Quiz</span>
+            </button>
+        </div>
+
+        <div id="screen-3-quiz" class="fade-in" style="display: none;">
+            <h2 class="section-title">
+                اسمع واختار الصورة الصح
+                <span class="bilingual-label">Listen & Choose the correct picture</span>
+            </h2>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="quiz-btn" onclick="playQuizAudio()">
+                    🔊 إضغط واسمع
+                    <span class="bilingual-label">Press & Listen</span>
+                </button>
+            </div>
+
+            <div class="options-container">
+                <div class="option-card" onclick="checkAnswer('bee')">
+                    <p class="position-label">في آخر الكلمة<br>(At the End)</p>
+                    <img src="images/e-3-bee.jpg" alt="Bee">
+                    <p class="option-title">B<span style="color: #9c27b0;">ee</span></p>
+                    <p class="option-subtitle">نحلة</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('pen')">
+                    <p class="position-label">في وسط الكلمة<br>(In the Middle)</p>
+                    <img src="images/e-2-pen.jpg" alt="Pen">
+                    <p class="option-title">P<span style="color: #9c27b0;">e</span>n</p>
+                    <p class="option-subtitle">قلم</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('egg')">
+                    <p class="position-label">في أول الكلمة<br>(At the Beginning)</p>
+                    <img src="images/e-1-egg.jpg" alt="Egg">
+                    <p class="option-title"><span style="color: #9c27b0;">E</span>gg</p>
+                    <p class="option-subtitle">بيضة</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p id="feedback"></p>
+                
+                <button id="btn-next-question" class="game-control-btn" style="display: none;" onclick="nextQuestion()">
+                    السؤال التالي ➡️
+                    <span class="bilingual-label" style="margin-top: 0;">Next Question</span>
+                </button>
+
+                <a href="challenge.html" id="btn-finish" class="game-control-btn finish-btn" style="display: none;">
+                    انتهيت، اذهب لتحدي الأبطال 🏆
+                    <span class="bilingual-label" style="margin-top: 0;">Finished, Go to Challenge</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <audio id="audio-egg" src="audio/e-1-egg.mp3"></audio>
+    <audio id="audio-pen" src="audio/e-2-pen.mp3"></audio>
+    <audio id="audio-bee" src="audio/e-3-bee.mp3"></audio>
+    <audio id="sound-correct" src="audio/correct.mp3"></audio>
+    <audio id="sound-wrong" src="audio/wrong.mp3"></audio>
+
+    <script>
+        function goToScreen2() {
+            let video = document.getElementById('main-video');
+            // إذا كان الفيديو من نوع إطار (iframe) نقوم بإعادة تحميل الرابط لإيقافه
+            if (video && video.tagName === 'IFRAME') {
+                let iframeSrc = video.src;
+                video.src = iframeSrc; 
+            } else if (video && typeof video.pause === 'function') {
+                video.pause(); 
+            }
+            
+            document.getElementById('screen-1-video').style.display = 'none';
+            document.getElementById('screen-2-flashcards').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function goToScreen3() {
+            document.getElementById('screen-2-flashcards').style.display = 'none';
+            document.getElementById('screen-3-quiz').style.display = 'block';
+            window.scrollTo(0, 0);
+            setTimeout(playQuizAudio, 500); 
+        }
+
+        function playAudio(audioId) {
+            let audio = document.getElementById(audioId);
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        // الكلمات الخاصة بحرف E للعبة بالترتيب
+        let quizWords = ['egg', 'pen', 'bee']; 
+        let currentQuestionIndex = 0; 
+        let isAnsweredCorrectly = false; 
+
+        function playQuizAudio() {
+            let targetWord = quizWords[currentQuestionIndex];
+            playAudio('audio-' + targetWord);
+        }
+
+        function checkAnswer(selectedWord) {
+            if(isAnsweredCorrectly) return; 
+
+            let targetWord = quizWords[currentQuestionIndex];
+            let feedback = document.getElementById('feedback');
+            
+            if(selectedWord === targetWord) {
+                isAnsweredCorrectly = true;
+                feedback.innerHTML = 'برافو! إجابة صحيحة ✅<br><span style="font-size: 15px; color: #666;">Excellent! Correct answer</span>';
+                feedback.style.color = 'green';
+                playAudio('sound-correct');
+                
+                if (currentQuestionIndex < quizWords.length - 1) {
+                    document.getElementById('btn-next-question').style.display = 'inline-block';
+                } else {
+                    document.getElementById('btn-finish').style.display = 'inline-block';
+                }
+            } else {
+                feedback.innerHTML = 'غلط.. حاول تاني ❌<br><span style="font-size: 15px; color: #666;">Wrong.. Try again</span>';
+                feedback.style.color = 'red';
+                playAudio('sound-wrong');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            isAnsweredCorrectly = false; 
+            
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('btn-next-question').style.display = 'none';
+            
+            playQuizAudio();
+        }
+    </script>
+</body>
+</html>

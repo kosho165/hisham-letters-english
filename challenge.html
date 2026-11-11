@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>CHAMPIONS CHALLENGE - تحدي الأبطال</title>
+    <style>
+        /* التنسيق الكامل لصفحة التحدي */
+        html { 
+            background-image: url('images/family.png'); 
+            background-size: contain; 
+            background-attachment: fixed; 
+            background-position: left bottom; 
+            background-repeat: no-repeat;
+            background-color: #f0f2f5;
+            height: 100%; 
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        
+        .app-container { width: 100%; max-width: 450px; background-color: rgba(255, 255, 255, 0.96); border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); padding: 25px; border: 4px solid #4a148c; text-align: center; position: relative; }
+        
+        .page-header { margin-bottom: 20px; }
+        .back-btn { position: absolute; top: 20px; left: 20px; background: #e53935; color: white; text-decoration: none; padding: 8px 15px; border-radius: 12px; font-weight: bold; font-size: 16px; direction: ltr; }
+        
+        h2 { color: #4a148c; margin: 0; font-size: 26px; font-weight: 900; }
+        p { color: #888; font-size: 14px; margin: 5px 0 20px; font-weight: bold; }
+        
+        .quiz-btn { width: 100%; padding: 15px; font-size: 18px; font-weight: bold; color: white; background: #4a148c; border: none; border-radius: 15px; cursor: pointer; margin-bottom: 15px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .quiz-btn:hover { transform: translateY(-3px); }
+        .bilingual-label { display: block; font-size: 14px; opacity: 0.9; margin-top: 5px; font-weight: normal; direction: ltr; }
+        
+        .score-board { background: #fce4ec; padding: 15px; border-radius: 15px; font-size: 22px; color: #ad1457; font-weight: bold; margin-bottom: 20px; border: 2px solid #f8bbd0; }
+        
+        .mic-btn { width: 100%; padding: 15px; font-size: 18px; font-weight: bold; color: white; background: #e91e63; border: none; border-radius: 15px; cursor: pointer; transition: 0.3s; }
+        .audio-player-container { background: #fff3e0; padding: 15px; border-radius: 15px; border: 2px dashed #ff9800; margin-top: 20px; text-align: center; }
+        
+        .self-grade-group { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+        .self-grade-btn { flex: 1; padding: 12px; font-size: 16px; font-weight: bold; color: white; border: none; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        .write-input { width: 100%; padding: 15px; font-size: 24px; border: 3px solid #ce93d8; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 15px; outline: none; box-sizing: border-box; color: #4a148c; }
+        .write-input:focus { border-color: #4a148c; }
+        
+        .action-group { display: flex; gap: 10px; }
+        .hint-btn { flex: 1; background: #ff9800; color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .check-btn { flex: 2; background: #4caf50; color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .next-btn { width: 100%; background: #2196f3; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 20px; margin-top: 20px; display: none; }
+        
+        #loading-screen { font-size: 22px; color: #4a148c; font-weight: bold; margin-top: 50px; padding: 30px; background: #f3e5f5; border-radius: 20px; }
+        #feedback { font-weight: bold; font-size: 20px; margin: 20px 0; min-height: 60px; }
+        
+        .word-image { width: 160px; height: 160px; object-fit: contain; margin: 10px auto 20px; display: block; border-radius: 20px; border: 3px solid #eee; padding: 10px; background: white; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="page-header">
+            <a href="index.html" class="back-btn">Exit 🚪</a>
+            <h2>تحدي الأبطال 🏆</h2>
+            <p>CHAMPIONS CHALLENGE</p>
+        </header>
+
+        <div id="loading-screen">جاري تجهيز التحدي... ⏳<br><span style="font-size: 14px; font-weight: normal; color: #666;">Loading...</span></div>
+
+        <div id="game-selection" style="display: none;">
+            <button class="quiz-btn" style="background: #e91e63;" onclick="startGame('speak')">
+                🎤 لعبة سجل وقارن
+                <span class="bilingual-label">Record & Compare Game</span>
+            </button>
+            <button class="quiz-btn" style="background: #ff9800;" onclick="startGame('write')">
+                ✍️ لعبة اسمع واكتب
+                <span class="bilingual-label">Listen & Write Game</span>
+            </button>
+        </div>
+
+        <div id="game-area" style="display: none;">
+            
+            <div class="score-board">
+                النتيجة / Score: <span id="score">0</span> / <span id="total">0</span>
+            </div>
+            
+            <img id="word-img" src="" class="word-image" onerror="this.src='assets/logo.png'">
+            
+            <button class="quiz-btn" style="background: #2196f3; margin-bottom: 25px;" onclick="playCurrentAudio()">
+                اسمع الكلمة 🔊 
+                <span class="bilingual-label">Listen to the word</span>
+            </button>
+
+            <div id="speak-section" style="display: none;">
+                <button class="mic-btn" id="record-btn" onclick="toggleRecording()">
+                    🎤 اضغط وسجل صوتك
+                    <span class="bilingual-label">Press to Record</span>
+                </button>
+
+                <div id="user-audio-container" class="audio-player-container" style="display: none;">
+                    <p style="color: #d84315; font-weight: bold; margin: 0 0 10px;">اسمع صوتك وقارن / Listen & Compare</p>
+                    <audio id="user-audio-player" controls style="width: 100%; height: 45px; outline: none; margin-bottom: 15px;"></audio>
+                    
+                    <p style="margin: 0 0 15px; font-weight: bold; color: #333;">هل نطقتها زي الكلمة الأصلية؟</p>
+                    
+                    <div class="self-grade-group">
+                        <button class="self-grade-btn" style="background: #4caf50;" onclick="selfGrade(true)">
+                            <span>✔️ صح (أنا بطل)</span>
+                            <span style="font-size: 13px; font-weight: normal; margin-top: 4px;">Correct</span>
+                        </button>
+                        <button class="self-grade-btn" style="background: #f44336;" onclick="selfGrade(false)">
+                            <span>❌ هجرب تاني</span>
+                            <span style="font-size: 13px; font-weight: normal; margin-top: 4px;">Try Again</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="write-section" style="display: none;">
+                <input type="text" id="write-input" class="write-input" placeholder="اكتب الكلمة هنا / Type here" autocomplete="off" dir="ltr">
+                <div class="action-group">
+                    <button class="hint-btn" onclick="showHint()">💡 مساعدة / Hint</button>
+                    <button class="check-btn" onclick="checkWriting()">✔️ تحقق / Check</button>
+                </div>
+            </div>
+
+            <div id="feedback"></div>
+            <button id="next-btn" class="next-btn" onclick="nextQuestion()">السؤال التالي ➡️ Next</button>
+
+        </div>
+
+    </div>
+
+    <div style="display: none;">
+        <audio id="audio-apple" src="audio/a-1-apple.mp3"></audio>
+        <audio id="audio-cat" src="audio/a-2-cat.mp3"></audio>
+        <audio id="audio-pizza" src="audio/a-3-pizza.mp3"></audio>
+        <audio id="audio-banana" src="audio/b-1-banana.mp3"></audio>
+        <audio id="audio-rabbit" src="audio/b-2-rabbit.mp3"></audio>
+        <audio id="audio-tub" src="audio/b-3-tub.mp3"></audio>
+        <audio id="audio-cow" src="audio/c-1-cow.mp3"></audio>
+        <audio id="audio-rice" src="audio/c-2-rice.mp3"></audio>
+        <audio id="audio-arc" src="audio/c-3-arc.mp3"></audio>
+        <audio id="audio-dog" src="audio/d-1-dog.mp3"></audio>
+        <audio id="audio-radio" src="audio/d-2-radio.mp3"></audio>
+        <audio id="audio-bed" src="audio/d-3-bed.mp3"></audio>
+        <audio id="audio-egg" src="audio/e-1-egg.mp3"></audio>
+        <audio id="audio-pen" src="audio/e-2-pen.mp3"></audio>
+        <audio id="audio-bee" src="audio/e-3-bee.mp3"></audio>
+        <audio id="sound-correct" src="audio/correct.mp3"></audio>
+        <audio id="sound-wrong" src="audio/wrong.mp3"></audio>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBNF8mnf0ucVbAbuZojokGSKNnUvQNvoGk",
+          authDomain: "hisham-s-english-academy.firebaseapp.com",
+          projectId: "hisham-s-english-academy",
+          storageBucket: "hisham-s-english-academy.firebasestorage.app",
+          messagingSenderId: "766824698161",
+          appId: "1:766824698161:web:aeb8d7ab371912e7aee010"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let isPro = false;
+        
+        // قائمة الكلمات الكاملة
+        window.allWords = [
+            { word: "apple", audio: "audio-apple", img: "images/a-1-apple.jpg" },
+            { word: "cat", audio: "audio-cat", img: "images/a-2-cat.jpg" },
+            { word: "pizza", audio: "audio-pizza", img: "images/a-3-pizza.jpg" },
+            { word: "banana", audio: "audio-banana", img: "images/b-1-banana.jpg" },
+            { word: "rabbit", audio: "audio-rabbit", img: "images/b-2-rabbit.jpg" },
+            { word: "tub", audio: "audio-tub", img: "images/b-3-tub.jpg" },
+            { word: "cow", audio: "audio-cow", img: "images/c-1-cow.jpg" },
+            { word: "rice", audio: "audio-rice", img: "images/c-2-rice.jpg" },
+            { word: "arc", audio: "audio-arc", img: "images/c-3-arc.jpg" },
+            { word: "dog", audio: "audio-dog", img: "images/d-1-dog.jpg" },
+            { word: "radio", audio: "audio-radio", img: "images/d-2-radio.jpg" },
+            { word: "bed", audio: "audio-bed", img: "images/d-3-bed.jpg" },
+            { word: "egg", audio: "audio-egg", img: "images/e-1-egg.jpg" },
+            { word: "pen", audio: "audio-pen", img: "images/e-2-pen.jpg" },
+            { word: "bee", audio: "audio-bee", img: "images/e-3-bee.jpg" }
+        ];
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const studentDoc = await getDoc(doc(db, "students", user.uid));
+                if (studentDoc.exists() && studentDoc.data().accountStatus === "pro_student") {
+                    isPro = true;
+                }
+                
+                // فلترة الكلمات لو الطالب مجاني (ياخد الحروف A, B, C, D بس)
+                if (!isPro) {
+                    window.allWords = window.allWords.filter(item => {
+                        return item.img.includes('/a-') || item.img.includes('/b-') || item.img.includes('/c-') || item.img.includes('/d-');
+                    });
+                }
+
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('game-selection').style.display = 'block';
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+
+    <script>
+        let currentList = [];
+        let currentIndex = 0;
+        let score = 0;
+        let gameMode = ""; 
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecordingAudio = false;
+
+        function playCorrectSound() { let snd = document.getElementById('sound-correct'); if(snd) {snd.currentTime = 0; snd.play().catch(e=>{});} }
+        function playWrongSound() { let snd = document.getElementById('sound-wrong'); if(snd){snd.currentTime = 0; snd.play().catch(e=>{});} }
+
+        window.startGame = function(mode) {
+            gameMode = mode;
+            document.getElementById('game-selection').style.display = "none";
+            document.getElementById('game-area').style.display = "block";
+            document.getElementById('speak-section').style.display = mode === 'speak' ? 'block' : 'none';
+            document.getElementById('write-section').style.display = mode === 'write' ? 'block' : 'none';
+            
+            // لخبطة الكلمات
+            currentList = [...window.allWords].sort(() => Math.random() - 0.5);
+            document.getElementById('total').innerText = currentList.length;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            let current = currentList[currentIndex];
+            document.getElementById('word-img').src = current.img;
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('next-btn').style.display = "none";
+            
+            if(gameMode === 'write') {
+                let input = document.getElementById('write-input');
+                input.value = "";
+                input.disabled = false;
+                input.focus();
+            } else {
+                resetRecordButton();
+                document.getElementById('user-audio-container').style.display = "none";
+            }
+        }
+
+        window.playCurrentAudio = function() {
+            let audioId = currentList[currentIndex].audio;
+            let audio = document.getElementById(audioId);
+            if(audio) { audio.currentTime = 0; audio.play().catch(e=>{}); }
+        }
+
+        window.showHint = function() {
+            let word = currentList[currentIndex].word;
+            document.getElementById('write-input').value = word.substring(0, 2);
+            document.getElementById('write-input').focus();
+        }
+
+        window.checkWriting = function() {
+            let user = document.getElementById('write-input').value.toLowerCase().trim();
+            let correct = currentList[currentIndex].word.toLowerCase();
+            const f = document.getElementById('feedback');
+            
+            if(user === correct) {
+                playCorrectSound();
+                f.innerHTML = "برافو! إجابة صحيحة ✅<br><span style='font-size:16px;font-weight:normal;'>Excellent!</span>";
+                f.style.color = "#2e7d32"; 
+                score++;
+                document.getElementById('score').innerText = score;
+                document.getElementById('write-input').disabled = true;
+                showNextBtn();
+            } else {
+                playWrongSound();
+                f.innerHTML = "غلط.. حاول تاني ❌<br><span style='font-size:16px;font-weight:normal;'>Try again</span>";
+                f.style.color = "#d32f2f";
+            }
+        }
+
+        window.toggleRecording = async function() {
+            if (window.location.protocol === 'file:') {
+                alert("برجاء رفع المشروع على Netlify ليعمل المايكروفون بشكل صحيح.");
+                return;
+            }
+
+            let btn = document.getElementById('record-btn');
+
+            if (isRecordingAudio) {
+                mediaRecorder.stop();
+                isRecordingAudio = false;
+                btn.innerHTML = `🎤 سجل مرة تانية <br><span class="bilingual-label" style="display:inline;">Record Again</span>`;
+                btn.style.background = "#e91e63";
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = event => { audioChunks.push(event.data); };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    const player = document.getElementById('user-audio-player');
+                    player.src = audioUrl;
+                    document.getElementById('user-audio-container').style.display = 'block';
+                };
+
+                mediaRecorder.start();
+                isRecordingAudio = true;
+                btn.innerHTML = `⏹️ إيقاف التسجيل <br><span class="bilingual-label" style="display:inline;">Stop Recording</span>`;
+                btn.style.background = "#ff9800";
+                document.getElementById('user-audio-container').style.display = 'none';
+                document.getElementById('feedback').innerText = "";
+
+            } catch (err) { alert("برجاء السماح باستخدام المايكروفون"); }
+        }
+
+        function resetRecordButton() {
+            let btn = document.getElementById('record-btn');
+            btn.innerHTML = `🎤 اضغط وسجل صوتك <br><span class="bilingual-label" style="display:inline;">Press to Record</span>`;
+            btn.style.background = "#e91e63";
+            btn.disabled = false;
+            isRecordingAudio = false;
+        }
+
+        window.selfGrade = function(isCorrect) {
+            const f = document.getElementById('feedback');
+            if(isCorrect) {
+                playCorrectSound();
+                f.innerHTML = `ممتاز! إنت بطل حقيقي ✅<br><span style='font-size:16px;font-weight:normal;'>Great Job!</span>`;
+                f.style.color = "#2e7d32"; 
+                score++;
+                document.getElementById('score').innerText = score;
+                document.getElementById('record-btn').disabled = true;
+                document.getElementById('user-audio-container').style.display = "none";
+                showNextBtn();
+            } else {
+                playWrongSound();
+                f.innerHTML = "ولا يهمك، اسمع الكلمة وجرب تاني ❌";
+                f.style.color = "#d32f2f";
+                document.getElementById('user-audio-container').style.display = "none";
+            }
+        }
+
+        function showNextBtn() {
+            if(currentIndex < currentList.length - 1) {
+                document.getElementById('next-btn').style.display = "block";
+            } else {
+                document.getElementById('feedback').innerHTML += "<br><br>🎉 مبروك! خلصت التحدي بنجاح!<br><span style='font-size:18px;'>Congratulations!</span>";
+                document.getElementById('next-btn').style.display = "none";
+            }
+        }
+
+        window.nextQuestion = function() { 
+            currentIndex++; 
+            loadQuestion(); 
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hisham English Academy</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html { background-image: url('images/family.png'); background-size: cover; background-attachment: fixed; background-position: left top; height: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; background-color: transparent; }
+        
+        .app-container { width: 100%; max-width: 380px; background-color: rgba(255, 255, 255, 0.95); border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); overflow: hidden; padding-bottom: 30px; }
+        
+        .main-header { background: linear-gradient(135deg, #ce93d8, #ab47bc); color: white; padding: 30px 20px 20px; text-align: center; border-radius: 0 0 30px 30px; margin-bottom: 20px; }
+        .logo-circle { width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .logo-circle img { width: 80%; height: 80%; object-fit: contain; }
+        .main-header h1 { margin: 0 0 5px; font-size: 22px; font-weight: bold; direction: ltr; }
+        .main-header p { margin: 0; font-size: 14px; }
+        
+        .form-container { padding: 0 25px; }
+        
+        /* أزرار التبديل بين الدخول والتسجيل */
+        .tabs { display: flex; justify-content: center; margin-bottom: 20px; background: #f3e5f5; border-radius: 15px; overflow: hidden; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: transparent; font-size: 16px; font-weight: bold; color: #888; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: #ab47bc; color: white; }
+
+        /* حقول الإدخال */
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; font-size: 14px; color: #4a148c; font-weight: bold; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid #ce93d8; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; transition: 0.3s; direction: ltr; }
+        .input-group input:focus { border-color: #ab47bc; box-shadow: 0 0 5px rgba(171, 71, 188, 0.5); }
+
+        /* زر الإرسال */
+        .submit-btn { width: 100%; background: linear-gradient(135deg, #ffb6c1, #ff8a80); color: #880e4f; padding: 15px; border-radius: 15px; border: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .submit-btn:hover { transform: scale(1.02); background: linear-gradient(135deg, #ff8a80, #ffb6c1); }
+
+        /* حقل الاسم يظهر فقط في التسجيل */
+        #name-group { display: none; }
+        
+        .footer-credit { text-align: center; font-size: 18px; font-weight: 900; color: #4a148c; margin-top: 25px; padding-bottom: 15px; direction: ltr; border-top: none; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container fade-in">
+        <header class="main-header">
+            <div class="logo-circle">
+                <img src="images/logo.png" alt="Logo">
+            </div>
+            <h1>Hisham English Academy</h1>
+            <p>أهلاً بك يا بطل الأبطال!</p>
+        </header>
+
+        <div class="form-container">
+            <div class="tabs">
+                <button id="tab-login" class="tab-btn active" onclick="switchTab('login')">دخول (Sign In)</button>
+                <button id="tab-signup" class="tab-btn" onclick="switchTab('signup')">حساب جديد (Sign Up)</button>
+            </div>
+
+            <form id="auth-form" onsubmit="event.preventDefault(); goToApp();">
+                
+                <div id="name-group" class="input-group fade-in">
+                    <label>اسم البطل (Name)</label>
+                    <input type="text" id="user-name" placeholder="أدخل اسمك هنا...">
+                </div>
+
+                <div class="input-group">
+                    <label>البريد الإلكتروني (Email)</label>
+                    <input type="email" id="user-email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>كلمة المرور (Password)</label>
+                    <input type="password" id="user-pass" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="submit-button" class="submit-btn">تسجيل الدخول 🚀</button>
+            </form>
+        </div>
+
+        <div class="footer-credit">Created by: Hisham Embaby</div>
+    </div>
+
+    <script>
+        let currentMode = 'login';
+
+        function switchTab(mode) {
+            currentMode = mode;
+            let tabLogin = document.getElementById('tab-login');
+            let tabSignup = document.getElementById('tab-signup');
+            let nameGroup = document.getElementById('name-group');
+            let submitBtn = document.getElementById('submit-button');
+
+            if (mode === 'signup') {
+                tabSignup.classList.add('active');
+                tabLogin.classList.remove('active');
+                nameGroup.style.display = 'block';
+                submitBtn.innerText = "إنشاء حساب وابدأ التحدي 🏆";
+            } else {
+                tabLogin.classList.add('active');
+                tabSignup.classList.remove('active');
+                nameGroup.style.display = 'none';
+                submitBtn.innerText = "تسجيل الدخول 🚀";
+            }
+        }
+
+        // الوظيفة دي مؤقتة بتدخلك على التطبيق لحد ما نربط بـ Firebase
+        function goToApp() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

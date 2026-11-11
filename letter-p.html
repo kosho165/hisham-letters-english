@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter P - حرف الـ P</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html { background-image: url('images/family.png'); background-size: cover; background-attachment: fixed; background-position: left top; height: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; background-color: transparent; }
+        .app-container { width: 100%; max-width: 380px; background-color: rgba(255, 255, 255, 0.95); border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); overflow: hidden; padding-bottom: 20px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; direction: ltr; }
+        .page-header h2 { margin: 0; color: #4a148c; font-size: 20px; font-weight: bold; flex-grow: 1; text-align: center; }
+        .back-btn { background: #ce93d8; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-weight: bold; font-size: 18px; }
+        .section-title { text-align: center; color: #4a148c; font-size: 24px; font-weight: bold; margin: 0 20px 20px; border-bottom: 1px dashed #ce93d8; padding-bottom: 15px; }
+        .bilingual-label { display: block; font-size: 13px; opacity: 0.8; font-weight: normal; margin-top: 5px; direction: ltr; }
+        .btn-en { display: block; font-size: 14px; font-weight: normal; margin-top: 2px; direction: ltr; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .video-container { text-align: center; padding: 0 20px 20px; }
+        .video-player { width: 100%; height: 220px; border-radius: 12px; outline: none; background: #000; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .next-screen-btn { background: #4a148c; color: white; width: calc(100% - 40px); margin: 0 20px; padding: 12px; border-radius: 12px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+        .next-screen-btn:hover { background: #6a1b9a; transform: scale(1.02); }
+        .flashcards-container { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 0 15px 20px; }
+        .flip-card { background-color: transparent; width: 160px; height: 265px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 2px solid #ce93d8; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: white; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .flip-card-back { transform: rotateY(180deg); background-color: #f3e5f5; border-color: #4a148c; }
+        .flashcard-img { width: 100%; height: 80px; object-fit: contain; border-radius: 10px; margin-bottom: 5px; }
+        .flashcard-btn { background: #ff9800; color: white; border: none; padding: 6px 12px; border-radius: 20px; margin-top: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; display: flex; flex-direction: column; align-items: center;}
+        .flashcard-btn span { font-size: 11px; font-weight: normal; }
+        .hint-text { font-size: 11px; color: #888; margin-top: 5px; }
+        .hint-text span { display: block; font-size: 10px; direction: ltr; }
+        .quiz-btn { background: #4a148c; color: white; padding: 10px 30px; border-radius: 25px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; margin-left: auto; margin-right: auto;}
+        .options-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 0 15px; }
+        .option-card { border: 2px solid #ce93d8; border-radius: 15px; padding: 10px; background: white; text-align: center; cursor: pointer; transition: 0.3s; flex: 0 0 45%; max-width: 140px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .option-card img { width: 100%; height: 80px; object-fit: contain; border-radius: 10px; border: 1px solid #eee; }
+        .option-title { margin: 5px 0 2px; font-size: 16px; font-weight: bold; color: #000; direction: ltr; }
+        .option-subtitle { font-size: 13px; color: #000; font-weight: bold; margin: 0; }
+        .position-label { font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #000; }
+        .position-label span { display: block; font-size: 9px; font-weight: normal; direction: ltr; color: #555; }
+        #feedback { font-size: 18px; font-weight: bold; margin-top: 15px; text-align: center; min-height: 40px; }
+        .spelling-slots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; direction: ltr; }
+        .slot { width: 40px; height: 50px; border: 2px dashed #ce93d8; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #4a148c; background: white; text-transform: uppercase; }
+        .spelling-letters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; direction: ltr; }
+        .letter-btn { background: #f3e5f5; color: #4a148c; border: 2px solid #4a148c; width: 45px; height: 55px; border-radius: 10px; font-size: 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        #spelling-feedback { font-size: 18px; font-weight: bold; margin-top: 10px; text-align: center; min-height: 50px; }
+        .footer-credit { text-align: center; font-size: 12px; color: #777; margin-top: 20px; direction: ltr; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="page-header" style="justify-content: flex-start;">
+            <a href="index.html" style="background: #4a148c; color: white; text-decoration: none; padding: 8px 15px; border-radius: 12px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); white-space: nowrap;">Back to Menu 🏠</a>
+            <h2 style="flex-grow: 1; text-align: center; margin-right: 120px;">Learn Letter P</h2>
+        </header>
+
+        <div id="screen-1-video" class="fade-in">
+            <h2 class="section-title">فيديو الحرف<span class="bilingual-label">Letter Video</span></h2>
+            <div class="video-container">
+                <iframe id="main-video" class="video-player" src="https://drive.google.com/file/d/1GOL5ZyHc2pZQqAVp-3ciKQ3vVuOziiPO/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+            <button class="next-screen-btn" onclick="goToScreen2()">الذهاب للكلمات ➡️<span class="btn-en">Go to Flashcards</span></button>
+        </div>
+
+        <div id="screen-2-flashcards" class="fade-in" style="display: none;">
+            <h2 class="section-title">الكلمات والأمثلة<span class="bilingual-label">Vocabulary & Examples</span></h2>
+            <div class="flashcards-container">
+                
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/p-1-panda.jpg" alt="Panda" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">Panda</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">باندا</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-panda')">🔊 اسمع <span>Listen</span></button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">A cute <span style="color: #ff9800;">panda</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">باندا لطيفة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-panda')">🔊 اسمع <span>Listen</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/p-2-spoon.jpg" alt="Spoon" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">Spoon</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">ملعقة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-spoon')">🔊 اسمع <span>Listen</span></button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">A small <span style="color: #ff9800;">spoon</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">ملعقة صغيرة</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-spoon')">🔊 اسمع <span>Listen</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/p-3-cup.jpg" alt="Cup" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">Cup</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">كوب</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-cup')">🔊 اسمع <span>Listen</span></button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">A red <span style="color: #ff9800;">cup</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">كوب أحمر</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-cup')">🔊 اسمع <span>Listen</span></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="next-screen-btn" style="background: #ff9800;" onclick="goToScreen3()">الذهاب للعبة الصور ➡️<span class="btn-en">Go to Picture Game</span></button>
+        </div>
+
+        <div id="screen-3-quiz" class="fade-in" style="display: none;">
+            <h2 class="section-title">اسمع واختار الصورة<span class="bilingual-label">Listen & Choose</span></h2>
+            <button class="quiz-btn" onclick="playQuizAudio()">🔊 إضغط واسمع<span class="btn-en">Press & Listen</span></button>
+
+            <div class="options-container">
+                <div class="option-card" onclick="checkAnswer('spoon')">
+                    <p class="position-label">في وسط الكلمة<span>(In the Middle)</span></p>
+                    <img src="images/p-2-spoon.jpg" alt="Spoon">
+                    <p class="option-title">S<span style="color: #9c27b0;">p</span>oon</p>
+                    <p class="option-subtitle">ملعقة</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('cup')">
+                    <p class="position-label">في آخر الكلمة<span>(At the End)</span></p>
+                    <img src="images/p-3-cup.jpg" alt="Cup">
+                    <p class="option-title">Cu<span style="color: #9c27b0;">p</span></p>
+                    <p class="option-subtitle">كوب</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('panda')" style="margin-top: 5px;">
+                    <p class="position-label">في أول الكلمة<span>(At the Beginning)</span></p>
+                    <img src="images/p-1-panda.jpg" alt="Panda">
+                    <p class="option-title"><span style="color: #9c27b0;">P</span>anda</p>
+                    <p class="option-subtitle">باندا</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p id="feedback"></p>
+                <button id="btn-next-question" class="next-screen-btn" style="display: none; background: #008CBA;" onclick="nextQuestion()">السؤال التالي ➡️<span class="btn-en">Next Question</span></button>
+                <button id="btn-finish" class="next-screen-btn" style="display: none; background: #4caf50;" onclick="goToScreen4()">لعبة ترتيب الحروف 🔠 ➡️<span class="btn-en">Spelling Game</span></button>
+            </div>
+        </div>
+
+        <div id="screen-4-spelling" class="fade-in" style="display: none;">
+            <h2 class="section-title">رتب حروف الكلمة<span class="bilingual-label">Spell the Word</span></h2>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img id="spelling-img" src="" style="width: 120px; height: 120px; object-fit: contain; border-radius: 15px; border: 3px solid #ce93d8;">
+                <br>
+                <button class="flashcard-btn" style="width: auto; padding: 8px 20px; font-size: 15px; margin-top: 10px; display: inline-block;" onclick="playSpellingAudio()">🔊 اسمع الكلمة <br><span style="font-size: 12px; font-weight: normal;">Listen to the word</span></button>
+            </div>
+
+            <div id="spelling-slots" class="spelling-slots"></div>
+            <div id="spelling-letters" class="spelling-letters"></div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button id="btn-undo-spell" class="flashcard-btn" style="width: auto; background: #e53935; padding: 8px 25px; font-size: 16px; display: none; margin: 0 auto;" onclick="undoLastLetter()">↩️ تراجع عن آخر حرف <br><span style="font-size: 12px; font-weight: normal;">Undo last letter</span></button>
+            </div>
+            
+            <div style="text-align: center;">
+                <p id="spelling-feedback"></p>
+                <button id="btn-next-spell" class="next-screen-btn" style="display: none; background: #008CBA;" onclick="nextSpelling()">الكلمة التالية ➡️<span class="btn-en">Next Word</span></button>
+                <a href="letter-q.html" id="btn-finish-spell" class="next-screen-btn" style="display: none; background: #4caf50; text-decoration: none;">انتهيت، انتقل لحرف Q ➡️<span class="btn-en">Finished, Go to Letter Q</span></a>
+            </div>
+        </div>
+        
+        <div class="footer-credit">Created by: Hisham Embaby</div>
+    </div>
+
+    <audio id="audio-panda" src="audio/p-1-panda.mp3"></audio>
+    <audio id="audio-spoon" src="audio/p-2-spoon.mp3"></audio>
+    <audio id="audio-cup" src="audio/p-3-cup.mp3"></audio>
+    <audio id="sound-correct" src="audio/correct.mp3"></audio>
+    <audio id="sound-wrong" src="audio/wrong.mp3"></audio>
+
+    <script>
+        function goToScreen2() {
+            let video = document.getElementById('main-video');
+            if (video && video.tagName === 'IFRAME') { let iframeSrc = video.src; video.src = iframeSrc; } else if (video && typeof video.pause === 'function') { video.pause(); }
+            document.getElementById('screen-1-video').style.display = 'none';
+            document.getElementById('screen-2-flashcards').style.display = 'block';
+            window.scrollTo(0, 0); 
+        }
+        function goToScreen3() {
+            document.getElementById('screen-2-flashcards').style.display = 'none';
+            document.getElementById('screen-3-quiz').style.display = 'block';
+            window.scrollTo(0, 0); 
+            setTimeout(playQuizAudio, 500);
+        }
+        function goToScreen4() {
+            document.getElementById('screen-3-quiz').style.display = 'none';
+            document.getElementById('screen-4-spelling').style.display = 'block';
+            window.scrollTo(0, 0); 
+            initSpelling(); 
+        }
+        function playAudio(audioId) {
+            let audio = document.getElementById(audioId);
+            if(audio) { audio.currentTime = 0; audio.play(); }
+        }
+
+        let quizWords = ['panda', 'spoon', 'cup']; 
+        let currentQuestionIndex = 0; 
+        let isAnsweredCorrectly = false; 
+
+        function playQuizAudio() { playAudio('audio-' + quizWords[currentQuestionIndex]); }
+
+        function checkAnswer(selectedWord) {
+            if(isAnsweredCorrectly) return; 
+            let targetWord = quizWords[currentQuestionIndex];
+            let feedback = document.getElementById('feedback');
+            
+            if(selectedWord === targetWord) {
+                isAnsweredCorrectly = true;
+                feedback.innerHTML = 'برافو! إجابة صحيحة ✅<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Great! Correct Answer</span>';
+                feedback.style.color = 'green';
+                playAudio('sound-correct');
+                
+                if (currentQuestionIndex < quizWords.length - 1) {
+                    document.getElementById('btn-next-question').style.display = 'flex';
+                } else {
+                    document.getElementById('btn-finish').style.display = 'flex';
+                }
+            } else {
+                feedback.innerHTML = 'غلط.. حاول تاني ❌<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Wrong.. Try again</span>';
+                feedback.style.color = 'red';
+                playAudio('sound-wrong');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            isAnsweredCorrectly = false; 
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('btn-next-question').style.display = 'none';
+            playQuizAudio();
+        }
+
+        let spellingWords = ['panda', 'spoon', 'cup'];
+        let currentSpellIndex = 0;
+        let selectedLetters = [];
+        let selectedButtonIds = []; 
+
+        function initSpelling() {
+            let word = spellingWords[currentSpellIndex];
+            selectedLetters = [];
+            selectedButtonIds = [];
+            
+            let imgIndex = currentSpellIndex + 1;
+            document.getElementById('spelling-img').src = 'images/p-' + imgIndex + '-' + word + '.jpg';
+            document.getElementById('spelling-feedback').innerHTML = '';
+            document.getElementById('btn-next-spell').style.display = 'none';
+            document.getElementById('btn-finish-spell').style.display = 'none';
+            document.getElementById('btn-undo-spell').style.display = 'none';
+
+            let slotsHtml = '';
+            for(let i=0; i<word.length; i++) { slotsHtml += '<div class="slot" id="slot-'+i+'"></div>'; }
+            document.getElementById('spelling-slots').innerHTML = slotsHtml;
+
+            let shuffled = word.split('').sort(() => 0.5 - Math.random());
+            let lettersHtml = '';
+            for(let i=0; i<shuffled.length; i++) { lettersHtml += '<button class="letter-btn" id="letter-'+i+'" onclick="selectLetter(\''+shuffled[i]+'\', this.id)">'+shuffled[i]+'</button>'; }
+            document.getElementById('spelling-letters').innerHTML = lettersHtml;
+            setTimeout(playSpellingAudio, 500);
+        }
+
+        function playSpellingAudio() { playAudio('audio-' + spellingWords[currentSpellIndex]); }
+
+        function selectLetter(letter, btnId) {
+            let word = spellingWords[currentSpellIndex];
+            if(selectedLetters.length < word.length) {
+                selectedLetters.push(letter);
+                selectedButtonIds.push(btnId);
+                document.getElementById('slot-' + (selectedLetters.length - 1)).innerText = letter;
+                document.getElementById(btnId).style.visibility = 'hidden';
+                document.getElementById('btn-undo-spell').style.display = 'inline-block';
+                if(selectedLetters.length === word.length) { checkSpelling(); }
+            }
+        }
+
+        function undoLastLetter() {
+            if(selectedLetters.length > 0) {
+                let lastBtnId = selectedButtonIds.pop();
+                document.getElementById(lastBtnId).style.visibility = 'visible'; 
+                selectedLetters.pop();
+                document.getElementById('slot-' + selectedLetters.length).innerText = ''; 
+                document.getElementById('spelling-feedback').innerHTML = ''; 
+                if(selectedLetters.length === 0) { document.getElementById('btn-undo-spell').style.display = 'none'; }
+            }
+        }
+
+        function checkSpelling() {
+            let word = spellingWords[currentSpellIndex];
+            let attempt = selectedLetters.join('');
+            let feedback = document.getElementById('spelling-feedback');
+            
+            if(attempt === word) {
+                feedback.innerHTML = 'ممتاز! ترتيب صحيح 🏆<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Excellent! Correct Spelling</span>';
+                feedback.style.color = 'green';
+                playAudio('sound-correct');
+                document.getElementById('btn-undo-spell').style.display = 'none'; 
+                if(currentSpellIndex < spellingWords.length - 1) {
+                    document.getElementById('btn-next-spell').style.display = 'flex';
+                } else {
+                    document.getElementById('btn-finish-spell').style.display = 'flex';
+                }
+            } else {
+                feedback.innerHTML = 'ترتيب غلط.. استخدم (تراجع) وحاول تاني ❌<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Wrong.. Use Undo and try again</span>';
+                feedback.style.color = 'red';
+                playAudio('sound-wrong');
+            }
+        }
+
+        function nextSpelling() {
+            currentSpellIndex++;
+            initSpelling();
+        }
+    </script>
+</body>
+</html>

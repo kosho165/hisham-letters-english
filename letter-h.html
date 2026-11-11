@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter H - حرف الـ H</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; direction: ltr; }
+        .page-header h2 { margin: 0; color: #4a148c; font-size: 20px; font-weight: bold; flex-grow: 1; text-align: center; }
+        .back-btn { background: #ce93d8; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-weight: bold; font-size: 18px; }
+
+        .section-title { text-align: center; color: #4a148c; font-size: 24px; font-weight: bold; margin: 0 20px 20px; border-bottom: 1px dashed #ce93d8; padding-bottom: 15px; }
+        .bilingual-label { display: block; font-size: 13px; opacity: 0.8; font-weight: normal; margin-top: 5px; direction: ltr; }
+        .btn-en { display: block; font-size: 14px; font-weight: normal; margin-top: 2px; direction: ltr; }
+
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .video-container { text-align: center; padding: 0 20px 20px; }
+        .video-player { width: 100%; height: 300px; border-radius: 12px; outline: none; background: #000; border: none; }
+
+        .next-screen-btn { background: #4a148c; color: white; width: calc(100% - 40px); margin: 0 20px; padding: 12px; border-radius: 12px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: 0.3s; }
+        .next-screen-btn:hover { background: #6a1b9a; transform: scale(1.02); }
+
+        .flashcards-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 0 15px 20px; }
+        .flip-card { background-color: transparent; width: 150px; height: 230px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; border: 2px solid #ce93d8; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background-color: white; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .flip-card-back { transform: rotateY(180deg); background-color: #f3e5f5; border-color: #4a148c; }
+        .flashcard-img { width: 100%; height: 80px; object-fit: contain; border-radius: 10px; margin-bottom: 5px; }
+        
+        .flashcard-btn { background: #ff9800; color: white; border: none; padding: 6px 12px; border-radius: 20px; margin-top: 8px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; display: flex; flex-direction: column; align-items: center;}
+        .flashcard-btn span { font-size: 11px; font-weight: normal; }
+        .hint-text { font-size: 11px; color: #888; margin-top: 5px; }
+        .hint-text span { display: block; font-size: 10px; direction: ltr; }
+
+        .quiz-btn { background: #4a148c; color: white; padding: 10px 30px; border-radius: 25px; font-size: 18px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2); margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; margin-left: auto; margin-right: auto;}
+        .options-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 0 15px; }
+        .option-card { border: 2px solid #ce93d8; border-radius: 15px; padding: 10px; background: white; text-align: center; cursor: pointer; transition: 0.3s; width: 100px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .option-card img { width: 100%; height: 70px; object-fit: contain; border-radius: 10px; }
+        .option-title { margin: 5px 0 2px; font-size: 15px; font-weight: bold; color: #000; direction: ltr; }
+        .option-subtitle { font-size: 12px; color: #000; font-weight: bold; margin: 0; }
+        .position-label { font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #000; }
+        .position-label span { display: block; font-size: 9px; font-weight: normal; direction: ltr; color: #555; }
+        #feedback { font-size: 18px; font-weight: bold; margin-top: 15px; text-align: center; min-height: 40px; }
+
+        .spelling-slots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; direction: ltr; }
+        .slot { width: 40px; height: 50px; border: 2px dashed #ce93d8; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #4a148c; background: white; text-transform: uppercase; }
+        .spelling-letters { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; direction: ltr; }
+        .letter-btn { background: #f3e5f5; color: #4a148c; border: 2px solid #4a148c; width: 45px; height: 55px; border-radius: 10px; font-size: 24px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        #spelling-feedback { font-size: 18px; font-weight: bold; margin-top: 10px; text-align: center; min-height: 50px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="page-header">
+            <a href="index.html" class="back-btn">&gt;</a>
+            <h2>Learn Letter H</h2>
+        </header>
+
+        <div id="screen-1-video" class="fade-in">
+            <h2 class="section-title">
+                فيديو الحرف
+                <span class="bilingual-label">Letter Video</span>
+            </h2>
+            <div class="video-container">
+                <!-- تم استبدال الـ video بـ iframe لدعم جوجل درايف -->
+                <iframe id="main-video" class="video-player" src="https://drive.google.com/file/d/1jZUkkKwL7MMTp2Hw00dF5KE_9PmVKU2Z/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+            
+            <button class="next-screen-btn" onclick="goToScreen2()">
+                الذهاب للكلمات ➡️
+                <span class="btn-en">Go to Flashcards</span>
+            </button>
+        </div>
+
+        <div id="screen-2-flashcards" class="fade-in" style="display: none;">
+            <h2 class="section-title">
+                الكلمات والأمثلة 
+                <span class="bilingual-label">Vocabulary & Examples</span>
+            </h2>
+            <div class="flashcards-container">
+                
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/h-1-hand.jpg" alt="Hand" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">Hand</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">يد</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-hand')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">This is my <span style="color: #ff9800;">hand</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">هذه يدي</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-hand')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/h-2-unhappy.jpg" alt="Unhappy" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">unhappy</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">تعيس / حزين</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-unhappy')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">A sad <span style="color: #ff9800;">face</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">وجه حزين</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-unhappy')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img src="images/h-3-mouth.jpg" alt="Mouth" class="flashcard-img">
+                            <h3 style="color: #4a148c; margin: 0; font-size: 20px;">Mouth</h3>
+                            <p style="margin: 5px 0 0; font-weight: bold; font-size: 14px;">فم</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-mouth')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                            <p class="hint-text">اضغط لقلب البطاقة 🔄<span>Click to flip</span></p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 style="color: #4a148c; margin: 0 0 5px; font-size: 14px;">مثال / Example:</h4>
+                            <p style="font-weight: bold; font-size: 14px; margin: 5px 0; direction: ltr;">This is a <span style="color: #ff9800;">mouth</span>.</p>
+                            <p style="margin: 5px 0 10px; color: #555; font-size: 13px;">هذا فم</p>
+                            <button class="flashcard-btn" onclick="event.stopPropagation(); playAudio('audio-mouth')">
+                                🔊 اسمع <span>Listen</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="next-screen-btn" style="background: #ff9800;" onclick="goToScreen3()">
+                الذهاب للعبة الصور ➡️
+                <span class="btn-en">Go to Picture Game</span>
+            </button>
+        </div>
+
+        <div id="screen-3-quiz" class="fade-in" style="display: none;">
+            <h2 class="section-title">
+                اسمع واختار الصورة
+                <span class="bilingual-label">Listen & Choose</span>
+            </h2>
+            
+            <button class="quiz-btn" onclick="playQuizAudio()">
+                🔊 إضغط واسمع
+                <span class="btn-en">Press & Listen</span>
+            </button>
+
+            <div class="options-container">
+                <div class="option-card" onclick="checkAnswer('mouth')">
+                    <p class="position-label">في آخر الكلمة<span>At the End</span></p>
+                    <img src="images/h-3-mouth.jpg" alt="Mouth">
+                    <p class="option-title">Mout<span style="color: #9c27b0;">h</span></p>
+                    <p class="option-subtitle">فم</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('unhappy')">
+                    <p class="position-label">في وسط الكلمة<span>In the Middle</span></p>
+                    <img src="images/h-2-unhappy.jpg" alt="Unhappy">
+                    <p class="option-title">un<span style="color: #9c27b0;">h</span>appy</p>
+                    <p class="option-subtitle">تعيس / حزين</p>
+                </div>
+                <div class="option-card" onclick="checkAnswer('hand')">
+                    <p class="position-label">في أول الكلمة<span>At the Beginning</span></p>
+                    <img src="images/h-1-hand.jpg" alt="Hand">
+                    <p class="option-title"><span style="color: #9c27b0;">H</span>and</p>
+                    <p class="option-subtitle">يد</p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <p id="feedback"></p>
+                
+                <button id="btn-next-question" class="next-screen-btn" style="display: none; background: #008CBA;" onclick="nextQuestion()">
+                    السؤال التالي ➡️
+                    <span class="btn-en">Next Question</span>
+                </button>
+
+                <button id="btn-finish" class="next-screen-btn" style="display: none; background: #4caf50;" onclick="goToScreen4()">
+                    لعبة ترتيب الحروف 🔠 ➡️
+                    <span class="btn-en">Spelling Game</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="screen-4-spelling" class="fade-in" style="display: none;">
+            <h2 class="section-title">
+                رتب حروف الكلمة
+                <span class="bilingual-label">Spell the Word</span>
+            </h2>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img id="spelling-img" src="" style="width: 120px; height: 120px; object-fit: contain; border-radius: 15px; border: 3px solid #ce93d8;">
+                <br>
+                <button class="flashcard-btn" style="width: auto; padding: 8px 20px; font-size: 15px; margin-top: 10px; display: inline-block;" onclick="playSpellingAudio()">
+                    🔊 اسمع الكلمة <br><span style="font-size: 12px; font-weight: normal;">Listen to the word</span>
+                </button>
+            </div>
+
+            <div id="spelling-slots" class="spelling-slots"></div>
+            <div id="spelling-letters" class="spelling-letters"></div>
+            
+            <div style="text-align: center;">
+                <p id="spelling-feedback"></p>
+
+                <button id="btn-next-spell" class="next-screen-btn" style="display: none; background: #008CBA;" onclick="nextSpelling()">
+                    الكلمة التالية ➡️
+                    <span class="btn-en">Next Word</span>
+                </button>
+                <a href="letter-i.html" id="btn-finish-spell" class="next-screen-btn" style="display: none; background: #4caf50; text-decoration: none;">
+                    انتهيت، انتقل لحرف I ➡️
+                    <span class="btn-en">Finished, Go to Letter I</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <audio id="audio-hand" src="audio/h-1-hand.mp3"></audio>
+    <audio id="audio-unhappy" src="audio/h-2-unhappy.mp3"></audio>
+    <audio id="audio-mouth" src="audio/h-3-mouth.mp3"></audio>
+    <audio id="sound-correct" src="audio/correct.mp3"></audio>
+    <audio id="sound-wrong" src="audio/wrong.mp3"></audio>
+
+    <script>
+        function goToScreen2() {
+            let video = document.getElementById('main-video');
+            if (video && video.tagName === 'IFRAME') {
+                let iframeSrc = video.src;
+                video.src = iframeSrc; 
+            } else if (video && typeof video.pause === 'function') {
+                video.pause(); 
+            }
+            
+            document.getElementById('screen-1-video').style.display = 'none';
+            document.getElementById('screen-2-flashcards').style.display = 'block';
+            window.scrollTo(0, 0); // التمرير لأعلى الشاشة
+        }
+
+        function goToScreen3() {
+            document.getElementById('screen-2-flashcards').style.display = 'none';
+            document.getElementById('screen-3-quiz').style.display = 'block';
+            window.scrollTo(0, 0); // التمرير لأعلى الشاشة
+            setTimeout(playQuizAudio, 500);
+        }
+
+        function goToScreen4() {
+            document.getElementById('screen-3-quiz').style.display = 'none';
+            document.getElementById('screen-4-spelling').style.display = 'block';
+            window.scrollTo(0, 0); // التمرير لأعلى الشاشة
+            initSpelling(); 
+        }
+
+        function playAudio(audioId) {
+            let audio = document.getElementById(audioId);
+            if(audio) { audio.currentTime = 0; audio.play(); }
+        }
+
+        // --- اللعبة 1 ---
+        let quizWords = ['hand', 'unhappy', 'mouth']; 
+        let currentQuestionIndex = 0; 
+        let isAnsweredCorrectly = false; 
+
+        function playQuizAudio() { playAudio('audio-' + quizWords[currentQuestionIndex]); }
+
+        function checkAnswer(selectedWord) {
+            if(isAnsweredCorrectly) return; 
+            let targetWord = quizWords[currentQuestionIndex];
+            let feedback = document.getElementById('feedback');
+            
+            if(selectedWord === targetWord) {
+                isAnsweredCorrectly = true;
+                feedback.innerHTML = 'برافو! إجابة صحيحة ✅<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Great! Correct Answer</span>';
+                feedback.style.color = 'green';
+                playAudio('sound-correct');
+                
+                if (currentQuestionIndex < quizWords.length - 1) {
+                    document.getElementById('btn-next-question').style.display = 'flex';
+                } else {
+                    document.getElementById('btn-finish').style.display = 'flex';
+                }
+            } else {
+                feedback.innerHTML = 'غلط.. حاول تاني ❌<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Wrong.. Try again</span>';
+                feedback.style.color = 'red';
+                playAudio('sound-wrong');
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            isAnsweredCorrectly = false; 
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('btn-next-question').style.display = 'none';
+            playQuizAudio();
+        }
+
+        // --- اللعبة 2 ---
+        let spellingWords = ['hand', 'unhappy', 'mouth'];
+        let currentSpellIndex = 0;
+        let selectedLetters = [];
+
+        function initSpelling() {
+            let word = spellingWords[currentSpellIndex];
+            selectedLetters = [];
+            let imgIndex = currentSpellIndex + 1;
+            document.getElementById('spelling-img').src = 'images/h-' + imgIndex + '-' + word + '.jpg';
+            document.getElementById('spelling-feedback').innerHTML = '';
+            document.getElementById('btn-next-spell').style.display = 'none';
+            document.getElementById('btn-finish-spell').style.display = 'none';
+
+            let slotsHtml = '';
+            for(let i=0; i<word.length; i++) slotsHtml += '<div class="slot" id="slot-'+i+'"></div>';
+            document.getElementById('spelling-slots').innerHTML = slotsHtml;
+
+            let shuffled = word.split('').sort(() => 0.5 - Math.random());
+            let lettersHtml = '';
+            for(let i=0; i<shuffled.length; i++) {
+                lettersHtml += '<button class="letter-btn" id="letter-'+i+'" onclick="selectLetter(\''+shuffled[i]+'\', this.id)">'+shuffled[i]+'</button>';
+            }
+            document.getElementById('spelling-letters').innerHTML = lettersHtml;
+            setTimeout(playSpellingAudio, 500);
+        }
+
+        function playSpellingAudio() { playAudio('audio-' + spellingWords[currentSpellIndex]); }
+
+        function selectLetter(letter, btnId) {
+            let word = spellingWords[currentSpellIndex];
+            if(selectedLetters.length < word.length) {
+                selectedLetters.push(letter);
+                document.getElementById('slot-' + (selectedLetters.length - 1)).innerText = letter;
+                document.getElementById(btnId).style.visibility = 'hidden';
+                if(selectedLetters.length === word.length) checkSpelling(); 
+            }
+        }
+
+        function checkSpelling() {
+            let word = spellingWords[currentSpellIndex];
+            let attempt = selectedLetters.join('');
+            let feedback = document.getElementById('spelling-feedback');
+            
+            if(attempt === word) {
+                feedback.innerHTML = 'ممتاز! ترتيب صحيح 🏆<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Excellent! Correct Spelling</span>';
+                feedback.style.color = 'green';
+                playAudio('sound-correct');
+                
+                if(currentSpellIndex < spellingWords.length - 1) {
+                    document.getElementById('btn-next-spell').style.display = 'flex';
+                } else {
+                    document.getElementById('btn-finish-spell').style.display = 'flex';
+                }
+            } else {
+                feedback.innerHTML = 'ترتيب غلط.. حاول تاني ❌<br><span style="font-size: 14px; color: #666; font-weight: normal; direction: ltr; display: block;">Wrong spelling.. Try again</span>';
+                feedback.style.color = 'red';
+                playAudio('sound-wrong');
+                setTimeout(initSpelling, 1500); 
+            }
+        }
+
+        function nextSpelling() {
+            currentSpellIndex++;
+            initSpelling();
+        }
+    </script>
+</body>
+</html>
